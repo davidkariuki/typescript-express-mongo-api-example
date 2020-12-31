@@ -2,7 +2,7 @@ import { model, Schema, Document } from "mongoose"
 
 export interface Driver {
   email: string
-  driving: boolean
+  driving?: boolean
 }
 
 const DriverSchema = new Schema({
