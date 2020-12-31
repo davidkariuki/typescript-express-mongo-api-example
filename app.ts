@@ -1,4 +1,4 @@
-import express, { json } from "express"
+import express, { json, ErrorRequestHandler } from "express"
 import { connect } from "mongoose"
 import { config } from "dotenv"
 
@@ -18,5 +18,12 @@ if (process.env.NODE_ENV !== "test") {
 
 app.use(json())
 routes(app)
+
+const errorHandler: ErrorRequestHandler = (err, _req, res, next) => {
+  res.status(422).send({ error: err.message })
+  next()
+}
+
+app.use(errorHandler)
 
 export default app

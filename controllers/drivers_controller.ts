@@ -1,15 +1,18 @@
-import type { Request, Response } from "express"
+import type { NextFunction, Request, Response } from "express"
 import DriverModel from "../models/driver"
 
 const DriversController = {
   greeting(_req: Request, res: Response) {
     res.send({ hi: "there" })
   },
-  async create(req: Request, res: Response) {
+  create(req: Request, res: Response, next: NextFunction) {
     const driverProps = req.body
-    const driver = await DriverModel.create(driverProps)
 
-    res.send(driver)
+    DriverModel.create(driverProps)
+      .then((driver) => {
+        res.send(driver)
+      })
+      .catch(next)
   },
 }
 
