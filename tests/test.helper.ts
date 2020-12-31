@@ -11,15 +11,17 @@ const setupDB = () => {
     })
   })
 
-  afterEach(async () => {
+  beforeEach(async () => {
     const { drivers } = connection.collections
     await drivers.deleteMany({})
+    await drivers.createIndex({ location: "2dsphere" })
   })
 
   afterAll(async () => {
     try {
       const { drivers } = connection.collections
       await drivers.drop()
+      await drivers.createIndex({ location: "2dsphere" })
     } catch {
       return
     }

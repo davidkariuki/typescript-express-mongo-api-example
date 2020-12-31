@@ -24,14 +24,24 @@ const DriversController = {
       })
       .catch(next)
   },
-  find(_req: Request, res: Response, next: NextFunction) {
-    DriverModel.find({})
+  index(req: Request, res: Response, next: NextFunction) {
+    const { lng, lat } = req.query
+
+    DriverModel.where("location")
+      .near({
+        center: {
+          type: "Point",
+          coordinates: [+(lng as string), +(lat as string)],
+        },
+        spherical: true,
+        maxDistance: 50000,
+      })
       .then((drivers) => {
         res.send(drivers)
       })
       .catch(next)
   },
-  findOne(req: Request, res: Response, next: NextFunction) {
+  show(req: Request, res: Response, next: NextFunction) {
     const { id: _id } = req.params
 
     DriverModel.findOne({ _id })
@@ -40,7 +50,7 @@ const DriversController = {
       })
       .catch(next)
   },
-  deleteOne(req: Request, res: Response, next: NextFunction) {
+  delete(req: Request, res: Response, next: NextFunction) {
     const { id: _id } = req.params
 
     DriverModel.deleteOne({ _id })
