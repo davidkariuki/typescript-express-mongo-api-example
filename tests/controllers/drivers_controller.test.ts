@@ -1,6 +1,10 @@
 import request from "supertest"
+
 import app from "../../app"
 import DriverModel from "../../models/driver"
+import setupDB from "../test.helper"
+
+setupDB()
 
 describe("Drivers controller", () => {
   it("POST to /api/drivers creates a new driver", async () => {

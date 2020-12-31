@@ -5,9 +5,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon index.ts",
-    "test": "jest --watch --detectOpenHandles"
+    "test": "NODE_ENV=test jest --watch --detectOpenHandles"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.11.9"
   },

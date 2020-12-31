@@ -6,7 +6,7 @@ export interface Driver {
 }
 
 const DriverSchema = new Schema({
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   driving: { type: Boolean, default: false },
 })
 

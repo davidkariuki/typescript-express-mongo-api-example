@@ -1,16 +1,20 @@
 import express, { json } from "express"
-import mongoose from "mongoose"
+import { connect } from "mongoose"
+import { config } from "dotenv"
 
 import routes from "./routes"
 
+config()
 const app = express()
 
-const url = "mongodb://127.0.0.1/muber"
-mongoose.connect(url, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  useFindAndModify: false,
-})
+if (process.env.NODE_ENV !== "test") {
+  connect(process.env.MONGODB_URL as string, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  })
+}
 
 app.use(json())
 routes(app)
